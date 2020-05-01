@@ -26,7 +26,7 @@ defmodule ChirpWeb.PostLive.PostComponent do
                 <%= live_patch to: Routes.post_index_path(@socket, :edit, @post.id) do %>
                     <i class="far " fa-edit"></i>
                 <% end %>
-                <%= link to: "#", phx_click: "delete", phx_value_id: @post.id, data: @post.id do %>
+                <%= link to: "#", phx_click: "delete", phx_value_id: @post.id, data: [confirm: "Are you sure?"] do %>
                     <i class="far fa-trash-alt"></i>
                 <% end %>
             </div>
