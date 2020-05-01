@@ -17,10 +17,16 @@ defmodule ChirpWeb.PostLive.PostComponent do
 
         <div class="row">
             <div class="column">
-                <i class="far fa-heart"></i> <%= @post.likes_count %>
+                <a href="#" phx-click="like" phx-target="<%= @myself %>"
+                    <i class="far fa-heart"></i> <%= @post.likes_count %>
+                    <p>likes</p>
+                </a>
             </div>
             <div class="column">
-                <i class="far fa-retweet"></i> <%= @post.reposts_count %>
+                <a href="#" phx-click="repost" phx-target="<%= @myself %>"
+                    <i class="far fa-heart"></i> <%= @post.reposts_count %>
+                    <p>reposts</p>
+                </a>
             </div>
             <div class="column">
                 <%= live_patch to: Routes.post_index_path(@socket, :edit, @post.id) do %>
@@ -35,5 +41,17 @@ defmodule ChirpWeb.PostLive.PostComponent do
     </div>
     """        
     end
+
+    def handle_event("like", _, socket) do
+        Chirp.Timeline.inc_likes(socket.assigns.post)
+        {:noreply, socket}
+    end
+
+    def handle_event("repost", _, socket) do
+        Chirp.Timeline.inc_reposts(socket.assigns.post)
+        {:noreply, socket}
+    end
+
+    
     
 end
